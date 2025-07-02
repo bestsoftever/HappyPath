@@ -1,4 +1,4 @@
-﻿namespace NoIf;
+﻿namespace HappyPath;
 
 public sealed class None
 {

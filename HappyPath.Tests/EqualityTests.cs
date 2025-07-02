@@ -1,4 +1,6 @@
-﻿namespace NoIf.Tests;
+﻿using HappyPath;
+
+namespace HappyPath.Tests;
 
 public class EqualityTests
 {
@@ -12,7 +14,7 @@ public class EqualityTests
 	public void SimpleErrorWorks()
 	{
 		var error = DoStuff();
-		var result = error.Then<bool>(x => x.StartsWith("a"));
+		var result = error.Then<bool>(x => x.StartsWith('a'));
 
 		result.Should().Be(new Error("wrong!"));
 
