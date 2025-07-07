@@ -1,8 +1,12 @@
-# NoIf
+# HappyPath
 
-Write easier to understand code!
+Focus on the happy path - stop using exceptions and if statements to control the flow in your code!
+With this approach your code can be much shorter, so easier to understand and maintain.
+
+Tricks which allow to achieve this are:
 - Stop using exceptions to represent errors - return `Result<T>` from all methods.
-- Implement flow as a chain of methods and focus on happy path, instead of exception handling.
+- Implement flow as a chain of methods.
+- Stop using `null`.
 
 # Features
 
@@ -41,7 +45,7 @@ public static string ReverseString(string input)
 }
 ```
 
-With `NoIf` we only need to replace throwing exceptions with returning Error:
+With `HappyPath` we only need to replace throwing exceptions with returning Error:
 
 ```csharp
 public static Result<string> ReverseString(string input)

@@ -1,4 +1,4 @@
-﻿namespace NoIf;
+﻿namespace HappyPath;
 
 /// <summary>
 /// Base class for errors

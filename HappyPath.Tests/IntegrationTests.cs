@@ -1,6 +1,7 @@
-﻿using Xunit.Sdk;
+﻿using HappyPath;
+using Xunit.Sdk;
 
-namespace NoIf.Tests;
+namespace HappyPath.Tests;
 
 public class IntegrationTests
 {
