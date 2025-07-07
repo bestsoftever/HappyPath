@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NoIf\NoIf.csproj" />
+    <ProjectReference Include="..\HappyPath\HappyPath.csproj" />
   </ItemGroup>
 
 </Project>

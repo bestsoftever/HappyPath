@@ -1,4 +1,6 @@
-﻿namespace NoIf.Tests;
+﻿using HappyPath;
+
+namespace HappyPath.Tests;
 
 public class NestedThenTests
 {
