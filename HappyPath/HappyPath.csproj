@@ -1,10 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>HappyPath</PackageId>
+		<Version>1.0.0</Version>
+
+		<Authors>bestsoftever</Authors>
+		<Company>bestsoftever</Company>
+		<Description>Focus on the happy path - stop using exceptions and if statements to control the flow in your code!</Description>
+		<PackageTags>result;exceptions;flow;null</PackageTags>
+		<RepositoryUrl>https://github.com/bestsoftever/HappyPath</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/bestsoftever/HappyPath</PackageProjectUrl>
+
+	</PropertyGroup>
 
 </Project>
