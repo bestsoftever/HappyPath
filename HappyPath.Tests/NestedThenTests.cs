@@ -17,6 +17,6 @@ public class NestedThenTests
 					.Then<int>(y => x * y);
 			});
 
-		result.Should().Be(20);
+		result.ShouldBe(20);
 	}
 }
