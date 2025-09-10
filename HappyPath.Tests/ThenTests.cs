@@ -4,23 +4,26 @@ namespace HappyPath.Tests;
 
 public class ThenTests
 {
-	public static IEnumerable<object[]> ReturnsUpperCase()
-	{
-		yield return new object[] { "abc", "ABC" };
-		yield return new object[] { "", new Error(TestService.ErrorMessage) };
-	}
+	public static TheoryData<string, Result<string>> ReturnsUpperCase
+		=> new()
+		{
+			{ "abc", "ABC" },
+			{ "", new Error(TestService.ErrorMessage) }
+		};
 
-	public static IEnumerable<object[]> ReturnsUpperCaseAndReverse()
-	{
-		yield return new object[] { "abc", "CBA" };
-		yield return new object[] { "", new Error(TestService.ErrorMessage) };
-	}
+	public static TheoryData<string, Result<string>> ReturnsUpperCaseAndReverse
+		=> new()
+		{
+			{ "abc", "CBA" },
+			{ "", new Error(TestService.ErrorMessage) }
+		};
 
-	public static IEnumerable<object[]> ReturnsNone()
-	{
-		yield return new object[] { "abc", Result.None };
-		yield return new object[] { "", new Error(TestService.ErrorMessage) };
-	}
+	public static TheoryData<string, Result<None>> ReturnsNone
+		=> new()
+		{
+			{ "abc", Result.None },
+			{ "", new Error(TestService.ErrorMessage) }
+		};
 
 	[Theory, MemberData(nameof(ReturnsUpperCaseAndReverse))]
 	public void SyncToSync(string input, Result<string> expected)
@@ -131,7 +134,7 @@ public class ThenTests
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCase))]
-	public async void NoneAsyncToSync(string input, Result<string> expected)
+	public async Task NoneAsyncToSync(string input, Result<string> expected)
 	{
 		Result<string> result = await TestService.DoNothingAsync(input)
 			.Then(_ => TestService.ToUpperCase(input));
@@ -149,7 +152,7 @@ public class ThenTests
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
-	public async void NoneAsyncToNone(string input, Result<None> expected)
+	public async Task NoneAsyncToNone(string input, Result<None> expected)
 	{
 		Result<None> result = await TestService.DoNothingAsync(input)
 			.Then(_ => TestService.DoNothing(input));

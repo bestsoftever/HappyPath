@@ -52,7 +52,7 @@ public class EqualityTests
 	[Fact]
 	public void WhenInnerErrorsHaveDifferentMessage_ErrorsAreNotEqual()
 	{
-		new Error("Some error", new Error("Some inner errr"), new Error("Another inner error"))
+		new Error("Some error", new Error("Some inner problem"), new Error("Another inner error"))
 			.ShouldNotBe(new Error("Some error", new Error("Some inner error"), new Error("Another inner error")));
 	}
 }
