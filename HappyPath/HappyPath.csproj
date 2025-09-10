@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -10,7 +10,6 @@
 	<PropertyGroup>
 		<PackageId>HappyPath</PackageId>
 		<Version>1.0.0</Version>
-
 		<Authors>bestsoftever</Authors>
 		<Company>bestsoftever</Company>
 		<Description>Focus on the happy path - stop using exceptions and if statements to control the flow in your code!</Description>
@@ -21,7 +20,10 @@
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<RepositoryType>git</RepositoryType>
 		<PackageProjectUrl>https://github.com/bestsoftever/HappyPath</PackageProjectUrl>
-
 	</PropertyGroup>
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath="\" />
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
 </Project>
