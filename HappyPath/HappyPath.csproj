@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
+		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -22,7 +23,7 @@
 		<PackageProjectUrl>https://github.com/bestsoftever/HappyPath</PackageProjectUrl>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="icon.png" Pack="true" PackagePath="\" />
+		<None Include=".\icon.png" Pack="true" PackagePath="\" />
 		<None Include="..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
