@@ -1,4 +1,4 @@
-name: Publish NuGet
+﻿name: Publish NuGet and GitHub Packages
 
 on:
   push:
@@ -6,22 +6,50 @@ on:
       - 'v*.*.*'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore
+      - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Pack
-        run: dotnet pack --configuration Release --no-build -o ./artifacts
+      - name: Extract version from tag -> set $VERSION
+        run: |
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+        shell: bash
 
-      - name: Push to NuGet
-        run: dotnet nuget push "./artifacts/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      - name: Show version (debug)
+        run: |
+          echo "Using VERSION=$VERSION"
+          dotnet --version
+
+      - name: Pack NuGet package
+        run: dotnet pack --configuration Release --no-build -p:PackageVersion=$VERSION -o ./artifacts
+
+      - name: List artifacts (debug)
+        run: ls -la ./artifacts || true
+
+      - name: Publish to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          echo "Pushing to NuGet.org..."
+          dotnet nuget push "./artifacts/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+
+      - name: Publish to GitHub Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Pushing to GitHub Packages..."
+          dotnet nuget push "./artifacts/*.nupkg" --api-key "$GITHUB_TOKEN" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate
