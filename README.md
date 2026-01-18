@@ -16,6 +16,7 @@ Tricks that allows to achieve this are:
 1. `Result.None` - represents the lack of a value returned from a method.
 1. Set of `Act<T>` methods, which allows to invoke an action if the result of the previous operation is `T`.
 1. Set of `Swap<T>` methods, which allows to swap the result type if the result of the previous operation is `T`.
+1. `Match<T>` method, which handles both success and error cases and returns a value of another type `T`. This ends the `Result<>` chain.
 1. `async` support - all `Then`, `Act`, and `Swap` methods have `async` overrides.
 
 ## What is not implemented
