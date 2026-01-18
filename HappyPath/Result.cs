@@ -22,6 +22,15 @@ public abstract class Result<TRight>
 
 	public abstract Result<TRight> Act<TToAct>(Action<TToAct> action);
 
+	public TOutput Match<TOutput>(Func<TRight, TOutput> func, Func<Error, TOutput> errorFunc) => this switch
+	{
+		TRight data => func(data),
+		Right<TRight> right => func(right.Value),
+		Error error => errorFunc(error),
+		Wrong<TRight> wrong => errorFunc(wrong.Error),
+		_ => throw new NotImplementedException()
+	};	
+
 	public static implicit operator Result<TRight>(Error error) => new Wrong<TRight>(error);
 
 	public static implicit operator Result<TRight>(TRight data) => new Right<TRight>(data);
