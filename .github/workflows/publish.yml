@@ -46,10 +46,3 @@ jobs:
         run: |
           echo "Pushing to NuGet.org..."
           dotnet nuget push "./artifacts/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
-
-      - name: Publish to GitHub Packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Pushing to GitHub Packages..."
-          dotnet nuget push "./artifacts/*.nupkg" --api-key "$GITHUB_TOKEN" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate
