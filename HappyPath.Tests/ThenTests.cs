@@ -1,4 +1,4 @@
-﻿using HappyPath;
+using HappyPath;
 
 namespace HappyPath.Tests;
 
@@ -31,7 +31,7 @@ public class ThenTests
 		Result<string> result = TestService.ReverseString(input)
 			.Then(s => TestService.ToUpperCase(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCaseAndReverse))]
@@ -40,7 +40,7 @@ public class ThenTests
 		Result<string> result = await TestService.ReverseString(input)
 			.Then(s => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -49,7 +49,7 @@ public class ThenTests
 		Result<None> result = TestService.ReverseString(input)
 			.Then(s => TestService.DoNothing(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -58,7 +58,7 @@ public class ThenTests
 		Result<None> result = await TestService.ReverseString(input)
 			.Then(s => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCaseAndReverse))]
@@ -67,7 +67,7 @@ public class ThenTests
 		Result<string> result = await TestService.ReverseStringAsync(input)
 			.Then(s => TestService.ToUpperCase(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCaseAndReverse))]
@@ -76,7 +76,7 @@ public class ThenTests
 		Result<string> result = await TestService.ReverseStringAsync(input)
 			.Then(s => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -85,7 +85,7 @@ public class ThenTests
 		Result<None> result = await TestService.ReverseStringAsync(input)
 			.Then(s => TestService.DoNothing(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -94,7 +94,7 @@ public class ThenTests
 		Result<None> result = await TestService.ReverseStringAsync(input)
 			.Then(s => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCase))]
@@ -103,7 +103,7 @@ public class ThenTests
 		Result<string> result = TestService.DoNothing(input)
 			.Then(_ => TestService.ToUpperCase(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCase))]
@@ -112,7 +112,7 @@ public class ThenTests
 		Result<string> result = await TestService.DoNothing(input)
 			.Then(_ => TestService.ToUpperCaseAsync(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -121,7 +121,7 @@ public class ThenTests
 		Result<None> result = TestService.DoNothing(input)
 			.Then(_ => TestService.DoNothing(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -130,7 +130,7 @@ public class ThenTests
 		Result<None> result = await TestService.DoNothing(input)
 			.Then(_ => TestService.DoNothingAsync(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCase))]
@@ -139,7 +139,7 @@ public class ThenTests
 		Result<string> result = await TestService.DoNothingAsync(input)
 			.Then(_ => TestService.ToUpperCase(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsUpperCase))]
@@ -148,7 +148,7 @@ public class ThenTests
 		Result<string> result = await TestService.DoNothingAsync(input)
 			.Then(_ => TestService.ToUpperCaseAsync(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -157,7 +157,7 @@ public class ThenTests
 		Result<None> result = await TestService.DoNothingAsync(input)
 			.Then(_ => TestService.DoNothing(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 
 	[Theory, MemberData(nameof(ReturnsNone))]
@@ -166,6 +166,6 @@ public class ThenTests
 		Result<None> result = await TestService.DoNothingAsync(input)
 			.Then(_ => TestService.DoNothingAsync(input));
 
-		result.ShouldBe(expected);
+		result.Should().Be(expected);
 	}
 }

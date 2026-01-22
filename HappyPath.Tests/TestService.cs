@@ -1,4 +1,4 @@
-﻿using HappyPath;
+using HappyPath;
 
 namespace HappyPath.Tests;
 

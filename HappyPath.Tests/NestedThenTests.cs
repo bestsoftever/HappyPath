@@ -1,4 +1,4 @@
-﻿using HappyPath;
+using HappyPath;
 
 namespace HappyPath.Tests;
 
@@ -17,6 +17,6 @@ public class NestedThenTests
 					.Then<int>(y => x * y);
 			});
 
-		result.ShouldBe(20);
+		result.Should().Be(20);
 	}
 }
