@@ -1,4 +1,4 @@
-﻿namespace HappyPath.Tests;
+namespace HappyPath.Tests;
 
 public class MatchTests
 {
@@ -11,11 +11,11 @@ public class MatchTests
 			value => $"Success: {value}",
 			error => $"Error: {error.Message}");
 
-		output.ShouldBe("Success: cba");
-	}
+		output.Should().Be("Success: cba");
+		}
 
-	[Fact]
-	public void SyncToSync_WhenError()
+		[Fact]
+		public void SyncToSync_WhenError()
 	{
 		Result<string> result = TestService.ReverseString("");
 
@@ -23,11 +23,11 @@ public class MatchTests
 			value => $"Success: {value}",
 			error => $"Error: {error.Message}");
 
-		output.ShouldBe($"Error: {TestService.ErrorMessage}");
-	}
+		output.Should().Be($"Error: {TestService.ErrorMessage}");
+		}
 
-	[Fact]
-	public async Task AsyncToSync_WhenSuccess()
+		[Fact]
+		public async Task AsyncToSync_WhenSuccess()
 	{
 		Result<string> result = await TestService.ReverseStringAsync("abc");
 
@@ -35,11 +35,11 @@ public class MatchTests
 			value => $"Success: {value}",
 			error => $"Error: {error.Message}");
 
-		output.ShouldBe("Success: cba");
-	}
+		output.Should().Be("Success: cba");
+		}
 
-	[Fact]
-	public async Task AsyncToSync_WhenError()
+		[Fact]
+		public async Task AsyncToSync_WhenError()
 	{
 		Result<string> result = await TestService.ReverseStringAsync("");
 
@@ -47,11 +47,11 @@ public class MatchTests
 			value => $"Success: {value}",
 			error => $"Error: {error.Message}");
 
-		output.ShouldBe($"Error: {TestService.ErrorMessage}");
-	}
+		output.Should().Be($"Error: {TestService.ErrorMessage}");
+		}
 
-	[Fact]
-	public async Task SyncToAsync_WhenSuccess()
+		[Fact]
+		public async Task SyncToAsync_WhenSuccess()
 	{
 		Result<string> result = TestService.ReverseString("abc");
 
@@ -59,11 +59,11 @@ public class MatchTests
 			async value => await Task.FromResult($"Success: {value}"),
 			async error => await Task.FromResult($"Error: {error.Message}"));
 
-		output.ShouldBe("Success: cba");
-	}
+		output.Should().Be("Success: cba");
+		}
 
-	[Fact]
-	public async Task SyncToAsync_WhenError()
+		[Fact]
+		public async Task SyncToAsync_WhenError()
 	{
 		Result<string> result = TestService.ReverseString("");
 
@@ -71,11 +71,11 @@ public class MatchTests
 			async value => await Task.FromResult($"Success: {value}"),
 			async error => await Task.FromResult($"Error: {error.Message}"));
 
-		output.ShouldBe($"Error: {TestService.ErrorMessage}");
-	}
+		output.Should().Be($"Error: {TestService.ErrorMessage}");
+		}
 
-	[Fact]
-	public async Task AsyncToAsync_WhenSuccess()
+		[Fact]
+		public async Task AsyncToAsync_WhenSuccess()
 	{
 		Result<string> result = await TestService.ReverseStringAsync("abc");
 
@@ -83,11 +83,11 @@ public class MatchTests
 			async value => await Task.FromResult($"Success: {value}"),
 			async error => await Task.FromResult($"Error: {error.Message}"));
 
-		output.ShouldBe("Success: cba");
-	}
+		output.Should().Be("Success: cba");
+		}
 
-	[Fact]
-	public async Task AsyncToAsync_WhenError()
+		[Fact]
+		public async Task AsyncToAsync_WhenError()
 	{
 		Result<string> result = await TestService.ReverseStringAsync("");
 
@@ -95,6 +95,6 @@ public class MatchTests
 			async value => await Task.FromResult($"Success: {value}"),
 			async error => await Task.FromResult($"Error: {error.Message}"));
 
-		output.ShouldBe($"Error: {TestService.ErrorMessage}");
-	}
-}
+		output.Should().Be($"Error: {TestService.ErrorMessage}");
+		}
+		}

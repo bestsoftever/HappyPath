@@ -1,2 +1,2 @@
-global using Shouldly;
+global using FluentAssertions;
 global using Xunit;

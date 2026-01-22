@@ -1,4 +1,4 @@
-﻿namespace HappyPath.Tests;
+namespace HappyPath.Tests;
 
 public class IntegrationTests
 {
@@ -33,9 +33,9 @@ public class IntegrationTests
 			.Swap<Dog>(d => new Cat(d.Name))
 			.Then(c => TestService.ToUpperCase($"{c.GetType().Name} is {c.Name}"));
 
-		result.ShouldBe(expectedResult);
-		errorMessage.ShouldBe(expectedError);
-		isDog.ShouldBe(expectedPies);
+		result.Should().Be(expectedResult);
+		errorMessage.Should().Be(expectedError);
+		isDog.Should().Be(expectedPies);
 	}
 	internal class ThisParrotIsDeadException : Exception
 	{
@@ -78,8 +78,8 @@ public class IntegrationTests
 
 		var result = TestService.ToUpperCase($"{animal.GetType().Name} is {animal.Name}");
 
-		result.ShouldBe(expectedResult);
-		errorMessage.ShouldBe(expectedError);
-		isPies.ShouldBe(expectedPies);
+		result.Should().Be(expectedResult);
+		errorMessage.Should().Be(expectedError);
+		isPies.Should().Be(expectedPies);
 	}
 }

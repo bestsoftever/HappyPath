@@ -11,7 +11,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCase(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -21,7 +21,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCase(s));
 
-		result.ShouldBe("INPUT VALUE CAN'T BE EMPTY");
+		result.Should().Be("INPUT VALUE CAN'T BE EMPTY");
 	}
 
 	[Fact]
@@ -31,7 +31,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -41,7 +41,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("INPUT VALUE CAN'T BE EMPTY");
+		result.Should().Be("INPUT VALUE CAN'T BE EMPTY");
 	}
 
 	[Fact]
@@ -51,7 +51,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -61,7 +61,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -71,7 +71,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -81,7 +81,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => e.Message)
 			.Then(s => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 
@@ -92,7 +92,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCase(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -102,7 +102,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCase(s));
 
-		result.ShouldBe("INPUT VALUE CAN'T BE EMPTY");
+		result.Should().Be("INPUT VALUE CAN'T BE EMPTY");
 	}
 
 	[Fact]
@@ -112,7 +112,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -122,7 +122,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("INPUT VALUE CAN'T BE EMPTY");
+		result.Should().Be("INPUT VALUE CAN'T BE EMPTY");
 	}
 
 	[Fact]
@@ -132,7 +132,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -142,7 +142,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -152,7 +152,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -162,7 +162,7 @@ public class SwapErrorsTests
 			.Swap<string, Error>(e => e.Message)
 			.Then(s => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 
@@ -174,7 +174,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCase(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -185,7 +185,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCase(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -196,7 +196,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -207,7 +207,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -218,7 +218,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -229,7 +229,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -240,7 +240,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -250,7 +250,7 @@ public class SwapErrorsTests
 			.Swap<Error>(e => Result.None)
 			.Then(_ => TestService.DoNothingAsync("cba"));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 
@@ -262,7 +262,7 @@ public class SwapErrorsTests
 			.Swap<None, Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCase(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -273,7 +273,7 @@ public class SwapErrorsTests
 			.Swap<None, Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCase(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -284,7 +284,7 @@ public class SwapErrorsTests
 			.Swap<None, Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -295,7 +295,7 @@ public class SwapErrorsTests
 			.Swap<None, Error>(e => Result.None)
 			.Then(_ => TestService.ToUpperCaseAsync(s));
 
-		result.ShouldBe("CBA");
+		result.Should().Be("CBA");
 	}
 
 	[Fact]
@@ -306,7 +306,7 @@ public class SwapErrorsTests
 			.Swap<None, Error>(e => Result.None)
 			.Then(_ => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -317,7 +317,7 @@ public class SwapErrorsTests
 			.Swap<None, Error>(e => Result.None)
 			.Then(_ => TestService.DoNothing(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -329,7 +329,7 @@ public class SwapErrorsTests
 			.Then(_ => TestService.DoNothingAsync(s));
 
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 
 	[Fact]
@@ -340,6 +340,6 @@ public class SwapErrorsTests
 			.Swap<None, Error>(e => Result.None)
 			.Then(_ => TestService.DoNothingAsync(s));
 
-		result.ShouldBe(Result.None);
+		result.Should().Be(Result.None);
 	}
 }
