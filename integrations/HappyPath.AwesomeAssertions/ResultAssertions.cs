@@ -51,9 +51,11 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 		return new AndConstraint<ResultAssertions<T>>(this);
 	}
 
-	public AndConstraint<ResultAssertions<T>> BeValid(T expected, string because = "", params object[] becauseArgs)
+	public AndWhichConstraint<ResultAssertions<T>, T> BeValidWith(T expected, string because = "", params object[] becauseArgs)
 	{
-		Subject.Match<bool>(
+		T? matchedValue = default;
+
+		Subject.Match(
 			value =>
 			{
 				assertionChain
@@ -63,6 +65,7 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 
 				value.Should().BeEquivalentTo(expected, because, becauseArgs);
 
+				matchedValue = value;
 				return true;
 			},
 			error =>
@@ -74,7 +77,7 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 				return false;
 			});
 
-		return new AndConstraint<ResultAssertions<T>>(this);
+		return new AndWhichConstraint<ResultAssertions<T>, T>(this, matchedValue!);
 	}
 
 	public AndConstraint<ResultAssertions<T>> BeValid(Action<T> action, string because = "", params object[] becauseArgs)
@@ -113,9 +116,11 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 		return new AndConstraint<ResultAssertions<T>>(this);
 	}
 
-	public AndConstraint<ResultAssertions<T>> BeError(Error expected, string because = "", params object[] becauseArgs)
+	public AndWhichConstraint<ResultAssertions<T>, Error> BeErrorWith(Error expected, string because = "", params object[] becauseArgs)
 	{
-		Subject.Match<bool>(
+		Error? matchedError = null;
+
+		Subject.Match(
 			value =>
 			{
 				assertionChain
@@ -127,10 +132,11 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 			error =>
 			{
 				error.Should().BeEquivalentTo(expected, because, becauseArgs);
+				matchedError = error;
 				return true;
 			});
 
-		return new AndConstraint<ResultAssertions<T>>(this);
+		return new AndWhichConstraint<ResultAssertions<T>, Error>(this, matchedError!);
 	}
 
 	public AndConstraint<ResultAssertions<T>> BeError(Action<Error> action, string because = "", params object[] becauseArgs)
