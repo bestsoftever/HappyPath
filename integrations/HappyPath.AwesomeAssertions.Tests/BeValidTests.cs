@@ -6,7 +6,7 @@ namespace HappyPath.AwesomeAssertions.Tests;
 public class BeValidTests
 {
 	[Fact]
-	public void BeValid_FailWhenError()
+	public void WithAction_FailWhenError()
 	{
 		Result<string> result = new Error("error!");
 
@@ -16,7 +16,7 @@ public class BeValidTests
 	}
 
 	[Fact]
-	public void BeValid_DoesNotFailWhenSuccess()
+	public void WithAction_DoesNotFailWhenSuccess()
 	{
 		Result<string> result = "valid text";
 
@@ -25,8 +25,9 @@ public class BeValidTests
 		act.Should().NotThrow();
 	}
 
+
 	[Fact]
-	public void BeValid_NoParams_FailWhenError()
+	public void NoParams_FailWhenError()
 	{
 		Result<string> result = new Error("error!");
 
@@ -36,7 +37,7 @@ public class BeValidTests
 	}
 
 	[Fact]
-	public void BeValid_NoParams_DoesNotFailWhenSuccess()
+	public void NoParams_DoesNotFailWhenSuccess()
 	{
 		Result<string> result = "valid text";
 
@@ -45,8 +46,9 @@ public class BeValidTests
 		act.Should().NotThrow();
 	}
 
+
 	[Fact]
-	public void BeValid_WithExpected_FailWhenError()
+	public void WithExpected_FailWhenError()
 	{
 		Result<string> result = new Error("error!");
 
@@ -56,7 +58,7 @@ public class BeValidTests
 	}
 
 	[Fact]
-	public void BeValid_WithExpected_FailWhenDiffers()
+	public void WithExpected_FailWhenDiffers()
 	{
 		Result<string> result = "wrong text";
 
@@ -66,7 +68,7 @@ public class BeValidTests
 	}
 
 	[Fact]
-	public void BeValid_WithExpected_DoesNotFailWhenSame()
+	public void WithExpected_DoesNotFailWhenSame()
 	{
 		Result<string> result = "valid text";
 

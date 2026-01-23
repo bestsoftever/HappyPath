@@ -6,7 +6,7 @@ namespace HappyPath.AwesomeAssertions.Tests;
 public class BeErrorTests
 {
 	[Fact]
-	public void BeError_FailWhenSuccess()
+	public void WithAction_FailWhenSuccess()
 	{
 		Result<string> result = "valid text";
 
@@ -16,7 +16,7 @@ public class BeErrorTests
 	}
 
 	[Fact]
-	public void BeError_DoesNotFailWhenError()
+	public void WithAction_DoesNotFailWhenError()
 	{
 		Result<string> result = new Error("error!");
 
@@ -26,7 +26,7 @@ public class BeErrorTests
 	}
 
 	[Fact]
-	public void BeError_NoParams_FailWhenSuccess()
+	public void NoParams_FailWhenSuccess()
 	{
 		Result<string> result = "valid text";
 
@@ -36,7 +36,7 @@ public class BeErrorTests
 	}
 
 	[Fact]
-	public void BeError_NoParams_DoesNotFailWhenError()
+	public void NoParams_DoesNotFailWhenError()
 	{
 		Result<string> result = new Error("error!");
 
@@ -46,7 +46,7 @@ public class BeErrorTests
 	}
 
 	[Fact]
-	public void BeError_WithExpected_FailWhenSuccess()
+	public void WithExpected_FailWhenSuccess()
 	{
 		Result<string> result = "valid text";
 
@@ -56,7 +56,7 @@ public class BeErrorTests
 	}
 
 	[Fact]
-	public void BeError_WithExpected_FailWhenDiffers()
+	public void WithExpected_FailWhenDiffers()
 	{
 		Result<string> result = new Error("wrong error");
 
@@ -66,7 +66,7 @@ public class BeErrorTests
 	}
 
 	[Fact]
-	public void BeError_WithExpected_DoesNotFailWhenSame()
+	public void WithExpected_DoesNotFailWhenSame()
 	{
 		Result<string> result = new Error("error!");
 
