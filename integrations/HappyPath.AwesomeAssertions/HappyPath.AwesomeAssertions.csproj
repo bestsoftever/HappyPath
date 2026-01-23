@@ -1,5 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>HappyPath.AwesomeAssertions</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>bestsoftever</Authors>
+		<Company>bestsoftever</Company>
+		<Description>AwesomeAssertions extensions for HappyPath Result type - fluent assertions for Result&lt;T&gt; and Error types.</Description>
+		<PackageTags>result;happypath;awesomeassertions;fluentassertions;testing;assertions</PackageTags>
+		<RepositoryUrl>https://github.com/bestsoftever/HappyPath</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/bestsoftever/HappyPath</PackageProjectUrl>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\..\HappyPath\HappyPath.csproj" />
 	</ItemGroup>
@@ -7,11 +28,5 @@
 	<ItemGroup>
 		<PackageReference Include="AwesomeAssertions" Version="9.3.0" />
 	</ItemGroup>
-
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
 
 </Project>
