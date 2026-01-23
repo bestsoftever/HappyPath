@@ -51,7 +51,7 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 		return new AndConstraint<ResultAssertions<T>>(this);
 	}
 
-	public AndWhichConstraint<ResultAssertions<T>, T> BeValidWith(T expected, string because = "", params object[] becauseArgs)
+	public AndWhichConstraint<ResultAssertions<T>, T> BeValid(T expected, string because = "", params object[] becauseArgs)
 	{
 		T? matchedValue = default;
 
@@ -116,7 +116,7 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 		return new AndConstraint<ResultAssertions<T>>(this);
 	}
 
-	public AndWhichConstraint<ResultAssertions<T>, Error> BeErrorWith(Error expected, string because = "", params object[] becauseArgs)
+	public AndWhichConstraint<ResultAssertions<T>, Error> BeError(Error expected, string because = "", params object[] becauseArgs)
 	{
 		Error? matchedError = null;
 

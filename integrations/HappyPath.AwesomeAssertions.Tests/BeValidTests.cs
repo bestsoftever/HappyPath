@@ -46,31 +46,31 @@ public class BeValidTests
 	}
 
 	[Fact]
-	public void BeValidWith_FailWhenError()
+	public void BeValid_WithExpected_FailWhenError()
 	{
 		Result<string> result = new Error("error!");
 
-		var act = () => result.Should().BeValidWith("valid text");
+		var act = () => result.Should().BeValid("valid text", because: "");
 
 		act.Should().Throw<XunitException>();
 	}
 
 	[Fact]
-	public void BeValidWith_FailWhenDiffers()
+	public void BeValid_WithExpected_FailWhenDiffers()
 	{
 		Result<string> result = "wrong text";
 
-		var act = () => result.Should().BeValidWith("valid text");
+		var act = () => result.Should().BeValid("valid text", because: "");
 
 		act.Should().Throw<XunitException>();
 	}
 
 	[Fact]
-	public void BeValidWith_DoesNotFailWhenSame()
+	public void BeValid_WithExpected_DoesNotFailWhenSame()
 	{
 		Result<string> result = "valid text";
 
-		var act = () => result.Should().BeValidWith("valid text");
+		var act = () => result.Should().BeValid("valid text", because: "");
 
 		act.Should().NotThrow();
 	}

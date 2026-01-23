@@ -46,31 +46,31 @@ public class BeErrorTests
 	}
 
 	[Fact]
-	public void BeErrorWith_FailWhenSuccess()
+	public void BeError_WithExpected_FailWhenSuccess()
 	{
 		Result<string> result = "valid text";
 
-		var act = () => result.Should().BeErrorWith(new Error("error!"));
+		var act = () => result.Should().BeError(new Error("error!"));
 
 		act.Should().Throw<XunitException>();
 	}
 
 	[Fact]
-	public void BeErrorWith_FailWhenDiffers()
+	public void BeError_WithExpected_FailWhenDiffers()
 	{
 		Result<string> result = new Error("wrong error");
 
-		var act = () => result.Should().BeErrorWith(new Error("error!"));
+		var act = () => result.Should().BeError(new Error("error!"));
 
 		act.Should().Throw<XunitException>();
 	}
 
 	[Fact]
-	public void BeErrorWith_DoesNotFailWhenSame()
+	public void BeError_WithExpected_DoesNotFailWhenSame()
 	{
 		Result<string> result = new Error("error!");
 
-		var act = () => result.Should().BeErrorWith(new Error("error!"));
+		var act = () => result.Should().BeError(new Error("error!"));
 
 		act.Should().NotThrow();
 	}
