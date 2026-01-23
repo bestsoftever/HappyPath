@@ -105,6 +105,7 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 			},
 			error =>
 			{
+				error.Should().BeOfType(expected.GetType(), because, becauseArgs);
 				error.Should().BeEquivalentTo(expected, because, becauseArgs);
 				matchedError = error;
 				return true;

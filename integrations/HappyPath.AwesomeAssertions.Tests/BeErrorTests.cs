@@ -43,7 +43,7 @@ public class BeErrorTests
 	[Fact]
 	public void WithExpected_DifferentError_Fails()
 	{
-		Result<string> result = new TestError("wrong error");
+		Result<string> result = new TestError("error!");
 
 		var act = () => result.Should().BeError(new Error("error!"));
 
@@ -55,7 +55,7 @@ public class BeErrorTests
 	{
 		Result<string> result = new TestError("error!");
 
-		var act = () => result.Should().BeError(new Error("error!"));
+		var act = () => result.Should().BeError(new TestError("error!"));
 
 		act.Should().NotThrow();
 	}
@@ -73,7 +73,7 @@ public class BeErrorTests
 	[Fact]
 	public void WithAction_DifferentError_Fails()
 	{
-		Result<string> result = new Error("wrong error");
+		Result<string> result = new Error("error!");
 
 		var act = () => result.Should().BeError(error =>
 		{
@@ -87,7 +87,7 @@ public class BeErrorTests
 	[Fact]
 	public void WithAction_SameError_Passes()
 	{
-		Result<string> result = new Error("error!");
+		Result<string> result = new TestError("error!");
 
 		var act = () => result.Should().BeError(error =>
 		{
