@@ -1,13 +1,17 @@
 mode: ContinuousDeployment
 next-version: 1.0.0
 
+major-version-bump-message: "^(breaking|major)(\\(.*\\))?!?:\\s"
+minor-version-bump-message: "^(feat|feature)(\\(.*\\))?!?:\\s"
+patch-version-bump-message: "^(fix|bugfix|patch)(\\(.*\\))?!?:\\s"
+
 branches:
   master:
     regex: ^master$
     mode: ContinuousDeployment
     tag: ''
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: false
     track-merge-target: false
     source-branches: ['feature', 'fix', 'breaking']
     is-source-branch-for: []

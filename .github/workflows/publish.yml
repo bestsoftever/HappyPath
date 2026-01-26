@@ -1,18 +1,47 @@
 ﻿name: Publish NuGet Packages
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - master
 
 jobs:
   publish:
+    # Only run if PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: master
+
+      - name: Display PR info
+        run: |
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Source Branch: ${{ github.head_ref }}"
+          echo "Target Branch: ${{ github.base_ref }}"
+          echo "Merge Commit: ${{ github.sha }}"
+
+      - name: Determine version bump from branch name
+        id: bump
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          echo "Source branch: $BRANCH"
+          
+          if [[ "$BRANCH" =~ ^(breaking|major)[/-] ]]; then
+            echo "increment=Major" >> $GITHUB_OUTPUT
+          elif [[ "$BRANCH" =~ ^(feat|feature)[/-] ]]; then
+            echo "increment=Minor" >> $GITHUB_OUTPUT
+          elif [[ "$BRANCH" =~ ^(fix|bugfix|patch)[/-] ]]; then
+            echo "increment=Patch" >> $GITHUB_OUTPUT
+          else
+            echo "increment=Patch" >> $GITHUB_OUTPUT
+            echo "Branch doesn't match pattern, defaulting to Patch"
+          fi
+        shell: bash
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v3.0.0
@@ -24,12 +53,15 @@ jobs:
         uses: gittools/actions/gitversion/execute@v3.0.0
         with:
           useConfigFile: true
+          overrideConfig: |
+            branches:
+              master:
+                increment: ${{ steps.bump.outputs.increment }}
 
       - name: Display Version
         run: |
           echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
-          echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
-          echo "BranchName: ${{ steps.gitversion.outputs.branchName }}"
+          echo "Increment: ${{ steps.bump.outputs.increment }}"
 
       - uses: actions/setup-dotnet@v4
         with:
