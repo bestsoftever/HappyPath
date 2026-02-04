@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11415.280 d18.0
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F46BDDB-E36E-4E94-9611-AD00A3C6B4D1}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,15 +11,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPath", "HappyPath\HappyPath.csproj", "{6CF2379D-4EF6-8CC5-3801-39840DE04682}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPath.Tests", "HappyPath.Tests\HappyPath.Tests.csproj", "{529BFAB1-1527-3925-1A6A-790A86A3634B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{84707E9D-0899-45E1-935C-8201178DDA96}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\pr-validation.yml = .github\workflows\pr-validation.yml
 		.github\workflows\publish.yml = .github\workflows\publish.yml
+		.github\workflows\release-on-tag.yml = .github\workflows\release-on-tag.yml
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4006D467-467D-4F05-B6F5-2F94A86DFFD2}"
+	ProjectSection(SolutionItems) = preProject
+		.github\release.yml = .github\release.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPath", "src\HappyPath\HappyPath.csproj", "{18018E12-96CA-3524-F62E-FFD157204761}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPath.Tests", "tests\HappyPath.Tests\HappyPath.Tests.csproj", "{F3DD874C-DED7-6275-CE71-70E570097B8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,17 +34,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6CF2379D-4EF6-8CC5-3801-39840DE04682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CF2379D-4EF6-8CC5-3801-39840DE04682}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CF2379D-4EF6-8CC5-3801-39840DE04682}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CF2379D-4EF6-8CC5-3801-39840DE04682}.Release|Any CPU.Build.0 = Release|Any CPU
-		{529BFAB1-1527-3925-1A6A-790A86A3634B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{529BFAB1-1527-3925-1A6A-790A86A3634B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{529BFAB1-1527-3925-1A6A-790A86A3634B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{529BFAB1-1527-3925-1A6A-790A86A3634B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18018E12-96CA-3524-F62E-FFD157204761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18018E12-96CA-3524-F62E-FFD157204761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18018E12-96CA-3524-F62E-FFD157204761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18018E12-96CA-3524-F62E-FFD157204761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3DD874C-DED7-6275-CE71-70E570097B8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3DD874C-DED7-6275-CE71-70E570097B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3DD874C-DED7-6275-CE71-70E570097B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3DD874C-DED7-6275-CE71-70E570097B8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{84707E9D-0899-45E1-935C-8201178DDA96} = {4006D467-467D-4F05-B6F5-2F94A86DFFD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03BB51B6-AF1B-48CB-816D-7DD63582A63E}
