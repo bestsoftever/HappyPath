@@ -1,48 +1,234 @@
-﻿name: Publish NuGet and GitHub Packages
+﻿name: Publish NuGet Packages
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
 
 jobs:
   publish:
+    # Only run if PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: master
+
+      - name: Display PR info
+        run: |
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Source Branch: ${{ github.head_ref }}"
+          echo "Target Branch: ${{ github.base_ref }}"
+          echo "Merge Commit: ${{ github.sha }}"
+
+      - name: Determine version bump from branch name
+        id: bump
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          echo "Source branch: $BRANCH"
+          
+          if [[ "$BRANCH" =~ ^(breaking|major)[/-] ]]; then
+            echo "increment=Major" >> $GITHUB_OUTPUT
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "label=breaking-change" >> $GITHUB_OUTPUT
+            echo "category=💥 Breaking Changes" >> $GITHUB_OUTPUT
+          elif [[ "$BRANCH" =~ ^(feat|feature)[/-] ]]; then
+            echo "increment=Minor" >> $GITHUB_OUTPUT
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "label=feature" >> $GITHUB_OUTPUT
+            echo "category=🚀 Features" >> $GITHUB_OUTPUT
+          elif [[ "$BRANCH" =~ ^(fix|bugfix|patch|hotfix)[/-] ]]; then
+            echo "increment=Patch" >> $GITHUB_OUTPUT
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "label=bug" >> $GITHUB_OUTPUT
+            echo "category=🐛 Bug Fixes" >> $GITHUB_OUTPUT
+          elif [[ "$BRANCH" =~ ^(perf)[/-] ]]; then
+            echo "increment=Patch" >> $GITHUB_OUTPUT
+            echo "should_release=true" >> $GITHUB_OUTPUT
+            echo "label=performance" >> $GITHUB_OUTPUT
+            echo "category=⚡ Performance Improvements" >> $GITHUB_OUTPUT
+          elif [[ "$BRANCH" =~ ^(chore|build|ci|docs|style|refactor|test|revert)[/-] ]]; then
+            echo "increment=None" >> $GITHUB_OUTPUT
+            echo "should_release=false" >> $GITHUB_OUTPUT
+            if [[ "$BRANCH" =~ ^docs[/-] ]]; then
+              echo "label=documentation" >> $GITHUB_OUTPUT
+              echo "category=📚 Documentation" >> $GITHUB_OUTPUT
+            elif [[ "$BRANCH" =~ ^test[/-] ]]; then
+              echo "label=test" >> $GITHUB_OUTPUT
+              echo "category=🧪 Tests" >> $GITHUB_OUTPUT
+            elif [[ "$BRANCH" =~ ^refactor[/-] ]]; then
+              echo "label=refactor" >> $GITHUB_OUTPUT
+              echo "category=🔄 Refactoring" >> $GITHUB_OUTPUT
+            elif [[ "$BRANCH" =~ ^style[/-] ]]; then
+              echo "label=style" >> $GITHUB_OUTPUT
+              echo "category=🎨 Styling" >> $GITHUB_OUTPUT
+            elif [[ "$BRANCH" =~ ^(build|ci)[/-] ]]; then
+              echo "label=ci" >> $GITHUB_OUTPUT
+              echo "category=🔨 Build & CI" >> $GITHUB_OUTPUT
+            else
+              echo "label=chore" >> $GITHUB_OUTPUT
+              echo "category=🔧 Maintenance" >> $GITHUB_OUTPUT
+            fi
+            echo "ℹ️  Branch type does not trigger a release"
+          else
+            echo "❌ Invalid branch name: $BRANCH"
+            echo ""
+            echo "This PR was merged with an invalid branch name!"
+            echo "Branch names must follow conventional commit format."
+            echo ""
+            echo "Valid prefixes: feat/, fix/, breaking/, chore/, docs/, etc."
+            echo "Please use proper branch naming for future PRs."
+            exit 1
+          fi
+        shell: bash
+
+      - name: Add label to PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const label = '${{ steps.bump.outputs.label }}';
+            if (label) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ github.event.pull_request.number }},
+                labels: [label]
+              });
+              console.log(`✅ Added label: ${label}`);
+            }
+
+      - name: Calculate next version
+        id: calc_version
+        if: steps.bump.outputs.should_release == 'true'
+        run: |
+          # Get the latest tag
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $LATEST_TAG"
+          
+          # Remove 'v' prefix if present
+          VERSION=${LATEST_TAG#v}
+          
+          # Parse major, minor, patch
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          MAJOR=${MAJOR:-0}
+          MINOR=${MINOR:-0}
+          PATCH=${PATCH:-0}
+          
+          echo "Current version: $MAJOR.$MINOR.$PATCH"
+          echo "Increment type: ${{ steps.bump.outputs.increment }}"
+          
+          # Increment based on branch type
+          case "${{ steps.bump.outputs.increment }}" in
+            Major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            Minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            Patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+          
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "New version: $NEW_VERSION"
+          echo "semVer=$NEW_VERSION" >> $GITHUB_OUTPUT
+        shell: bash
 
       - uses: actions/setup-dotnet@v4
+        if: steps.bump.outputs.should_release == 'true'
         with:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
+        if: steps.bump.outputs.should_release == 'true'
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        if: steps.bump.outputs.should_release == 'true'
+        run: dotnet build --configuration Release --no-restore -p:Version=${{ steps.calc_version.outputs.semVer }}
 
-      - name: Extract version from tag -> set $VERSION
-        run: |
-          echo "GITHUB_REF: $GITHUB_REF"
-          echo "GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
-        shell: bash
+      - name: Run tests
+        if: steps.bump.outputs.should_release == 'true'
+        run: dotnet test --configuration Release --no-build
 
-      - name: Show version (debug)
-        run: |
-          echo "Using VERSION=$VERSION"
-          dotnet --version
-
-      - name: Pack NuGet package
-        run: dotnet pack --configuration Release --no-build -p:PackageVersion=$VERSION -o ./artifacts
+      - name: Pack NuGet packages
+        if: steps.bump.outputs.should_release == 'true'
+        run: dotnet pack --configuration Release --no-build -p:PackageVersion=${{ steps.calc_version.outputs.semVer }} -o ./artifacts
 
       - name: List artifacts (debug)
-        run: ls -la ./artifacts || true
+        if: steps.bump.outputs.should_release == 'true'
+        run: ls -la ./artifacts
 
       - name: Publish to NuGet.org
+        if: steps.bump.outputs.should_release == 'true'
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
-          echo "Pushing to NuGet.org..."
-          dotnet nuget push "./artifacts/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json
+          echo "Pushing packages to NuGet.org..."
+          dotnet nuget push "./artifacts/*.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Create and push git tag
+        if: steps.bump.outputs.should_release == 'true'
+        run: |
+          TAG="v${{ steps.calc_version.outputs.semVer }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
+          echo "Created and pushed tag: $TAG"
+
+      - name: Create GitHub Release
+        if: steps.bump.outputs.should_release == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = `v${{ steps.calc_version.outputs.semVer }}`;
+            const prTitle = `${{ github.event.pull_request.title }}`;
+            const prBody = `${{ github.event.pull_request.body }}`;
+            const prNumber = ${{ github.event.pull_request.number }};
+            const category = `${{ steps.bump.outputs.category }}`;
+            const increment = `${{ steps.bump.outputs.increment }}`;
+            
+            // Generate release notes using GitHub's API
+            const { data: releaseNotes } = await github.rest.repos.generateReleaseNotes({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tag,
+            });
+            
+            // Create custom release body
+            let releaseBody = `## ${category}\n\n`;
+            releaseBody += `**${prTitle}** (#${prNumber})\n\n`;
+            
+            if (prBody) {
+              releaseBody += `${prBody}\n\n`;
+            }
+            
+            releaseBody += `---\n\n`;
+            releaseBody += releaseNotes.body;
+            
+            // Create the release
+            await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tag,
+              name: `Release ${tag}`,
+              body: releaseBody,
+              draft: false,
+              prerelease: false
+            });
+            
+            console.log(`✅ Created release ${tag}`);

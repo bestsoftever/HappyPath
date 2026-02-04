@@ -1,0 +1,47 @@
+mode: ContinuousDeployment
+next-version: 1.0.0
+
+major-version-bump-message: "^(breaking|major)(\\(.*\\))?!?:\\s"
+minor-version-bump-message: "^(feat|feature)(\\(.*\\))?!?:\\s"
+patch-version-bump-message: "^(fix|bugfix|patch)(\\(.*\\))?!?:\\s"
+
+branches:
+  master:
+    regex: ^master$
+    mode: ContinuousDeployment
+    tag: ''
+    increment: Inherit
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: false
+    source-branches: ['feature', 'fix', 'breaking']
+    is-source-branch-for: []
+    is-release-branch: true
+
+  feature:
+    regex: ^feat(ure)?[/-]
+    mode: ContinuousDeployment
+    tag: alpha
+    increment: Minor
+    source-branches: ['master']
+    is-source-branch-for: ['master']
+
+  fix:
+    regex: ^(fix|bugfix|patch)[/-]
+    mode: ContinuousDeployment
+    tag: beta
+    increment: Patch
+    source-branches: ['master']
+    is-source-branch-for: ['master']
+
+  breaking:
+    regex: ^(breaking|major)[/-]
+    mode: ContinuousDeployment
+    tag: alpha
+    increment: Major
+    source-branches: ['master']
+    is-source-branch-for: ['master']
+
+ignore:
+  sha: []
+
+merge-message-formats: {}
