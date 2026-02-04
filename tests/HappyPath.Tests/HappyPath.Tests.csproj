@@ -28,7 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\HappyPath\HappyPath.csproj" />
+	  <ProjectReference Include="..\..\src\HappyPath\HappyPath.csproj" />
 	</ItemGroup>
 
 </Project>
