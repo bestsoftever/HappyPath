@@ -1,0 +1,64 @@
+name: PR Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches:
+      - master
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name format
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          echo "Source branch: $BRANCH"
+          
+          # Check if branch name matches expected patterns
+          # Version bumping branches
+          if [[ "$BRANCH" =~ ^(breaking|major)[/-] ]]; then
+            echo "✅ Valid branch: Major/Breaking change"
+            echo "This will bump the MAJOR version (x.0.0)"
+          elif [[ "$BRANCH" =~ ^(feat|feature)[/-] ]]; then
+            echo "✅ Valid branch: Feature"
+            echo "This will bump the MINOR version (0.x.0)"
+          elif [[ "$BRANCH" =~ ^(fix|bugfix|patch|hotfix)[/-] ]]; then
+            echo "✅ Valid branch: Fix/Patch"
+            echo "This will bump the PATCH version (0.0.x)"
+          elif [[ "$BRANCH" =~ ^(perf)[/-] ]]; then
+            echo "✅ Valid branch: Performance"
+            echo "This will bump the PATCH version (0.0.x)"
+          # Non-releasing branches
+          elif [[ "$BRANCH" =~ ^(chore|build|ci|docs|style|refactor|test|revert)[/-] ]]; then
+            echo "✅ Valid branch: $BRANCH"
+            echo "⚠️  This branch type will NOT trigger a new release"
+          else
+            echo "❌ Invalid branch name: $BRANCH"
+            echo ""
+            echo "Branch name must start with one of the following prefixes:"
+            echo ""
+            echo "📦 Version bumping (will create a release):"
+            echo "  - breaking/ or major/     → Major version bump (x.0.0)"
+            echo "  - feat/ or feature/       → Minor version bump (0.x.0)"
+            echo "  - fix/, bugfix/, patch/, hotfix/ → Patch version bump (0.0.x)"
+            echo "  - perf/                   → Patch version bump (0.0.x)"
+            echo ""
+            echo "🔧 Non-releasing (no version bump):"
+            echo "  - chore/    → Maintenance tasks"
+            echo "  - build/    → Build system changes"
+            echo "  - ci/       → CI configuration"
+            echo "  - docs/     → Documentation only"
+            echo "  - style/    → Code style/formatting"
+            echo "  - refactor/ → Code refactoring"
+            echo "  - test/     → Adding/updating tests"
+            echo "  - revert/   → Reverting changes"
+            echo ""
+            echo "Examples:"
+            echo "  - feat/add-new-feature"
+            echo "  - fix/resolve-login-issue"
+            echo "  - docs/update-readme"
+            echo "  - chore/update-dependencies"
+            exit 1
+          fi
+        shell: bash
