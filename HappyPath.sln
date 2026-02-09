@@ -28,6 +28,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPath", "src\HappyPath\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyPath.Tests", "tests\HappyPath.Tests\HappyPath.Tests.csproj", "{F3DD874C-DED7-6275-CE71-70E570097B8E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D4CB40B3-B603-495B-99EE-0F19B13497FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F1BC031E-D09C-4D96-A30F-850FA027953A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{84707E9D-0899-45E1-935C-8201178DDA96} = {4006D467-467D-4F05-B6F5-2F94A86DFFD2}
+		{18018E12-96CA-3524-F62E-FFD157204761} = {D4CB40B3-B603-495B-99EE-0F19B13497FD}
+		{F3DD874C-DED7-6275-CE71-70E570097B8E} = {F1BC031E-D09C-4D96-A30F-850FA027953A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03BB51B6-AF1B-48CB-816D-7DD63582A63E}
