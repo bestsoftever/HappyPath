@@ -9,7 +9,6 @@
 
 	<PropertyGroup>
 		<PackageId>HappyPath.AwesomeAssertions</PackageId>
-		<Version>1.0.0</Version>
 		<Authors>bestsoftever</Authors>
 		<Company>bestsoftever</Company>
 		<Description>AwesomeAssertions extensions for HappyPath Result type - fluent assertions for Result&lt;T&gt; and Error types.</Description>
