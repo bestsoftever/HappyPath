@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.2.11415.280 d18.0
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F46BDDB-E36E-4E94-9611-AD00A3C6B4D1}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,7 +18,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{84707E9D-0899-45E1-935C-8201178DDA96}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\pr-validation.yml = .github\workflows\pr-validation.yml
 		.github\workflows\publish.yml = .github\workflows\publish.yml
+		.github\workflows\release-on-tag.yml = .github\workflows\release-on-tag.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{CD6D1F84-03D6-4AD1-B2FD-918B28B5092C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\release.yml = .github\release.yml
 	EndProjectSection
 EndProject
 Global
@@ -38,6 +45,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{84707E9D-0899-45E1-935C-8201178DDA96} = {CD6D1F84-03D6-4AD1-B2FD-918B28B5092C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03BB51B6-AF1B-48CB-816D-7DD63582A63E}
