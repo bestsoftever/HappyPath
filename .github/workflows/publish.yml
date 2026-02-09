@@ -40,17 +40,17 @@ jobs:
             echo "increment=Major" >> $GITHUB_OUTPUT
             echo "should_release=true" >> $GITHUB_OUTPUT
             echo "label=breaking-change" >> $GITHUB_OUTPUT
-            echo "category=💥 Breaking Changes" >> $GITHUB_OUTPUT
+            echo "category=� Breaking Changes" >> $GITHUB_OUTPUT
           elif [[ "$BRANCH" =~ ^(feat|feature)[/-] ]]; then
             echo "increment=Minor" >> $GITHUB_OUTPUT
             echo "should_release=true" >> $GITHUB_OUTPUT
             echo "label=feature" >> $GITHUB_OUTPUT
-            echo "category=🚀 Features" >> $GITHUB_OUTPUT
+            echo "category=� Features" >> $GITHUB_OUTPUT
           elif [[ "$BRANCH" =~ ^(fix|bugfix|patch|hotfix)[/-] ]]; then
             echo "increment=Patch" >> $GITHUB_OUTPUT
             echo "should_release=true" >> $GITHUB_OUTPUT
             echo "label=bug" >> $GITHUB_OUTPUT
-            echo "category=🐛 Bug Fixes" >> $GITHUB_OUTPUT
+            echo "category=� Bug Fixes" >> $GITHUB_OUTPUT
           elif [[ "$BRANCH" =~ ^(perf)[/-] ]]; then
             echo "increment=Patch" >> $GITHUB_OUTPUT
             echo "should_release=true" >> $GITHUB_OUTPUT
@@ -61,22 +61,22 @@ jobs:
             echo "should_release=false" >> $GITHUB_OUTPUT
             if [[ "$BRANCH" =~ ^docs[/-] ]]; then
               echo "label=documentation" >> $GITHUB_OUTPUT
-              echo "category=📚 Documentation" >> $GITHUB_OUTPUT
+              echo "category=� Documentation" >> $GITHUB_OUTPUT
             elif [[ "$BRANCH" =~ ^test[/-] ]]; then
               echo "label=test" >> $GITHUB_OUTPUT
-              echo "category=🧪 Tests" >> $GITHUB_OUTPUT
+              echo "category=� Tests" >> $GITHUB_OUTPUT
             elif [[ "$BRANCH" =~ ^refactor[/-] ]]; then
               echo "label=refactor" >> $GITHUB_OUTPUT
-              echo "category=🔄 Refactoring" >> $GITHUB_OUTPUT
+              echo "category=� Refactoring" >> $GITHUB_OUTPUT
             elif [[ "$BRANCH" =~ ^style[/-] ]]; then
               echo "label=style" >> $GITHUB_OUTPUT
-              echo "category=🎨 Styling" >> $GITHUB_OUTPUT
+              echo "category=� Styling" >> $GITHUB_OUTPUT
             elif [[ "$BRANCH" =~ ^(build|ci)[/-] ]]; then
               echo "label=ci" >> $GITHUB_OUTPUT
-              echo "category=🔨 Build & CI" >> $GITHUB_OUTPUT
+              echo "category=� Build & CI" >> $GITHUB_OUTPUT
             else
               echo "label=chore" >> $GITHUB_OUTPUT
-              echo "category=🔧 Maintenance" >> $GITHUB_OUTPUT
+              echo "category=� Maintenance" >> $GITHUB_OUTPUT
             fi
             echo "ℹ️  Branch type does not trigger a release"
           else
