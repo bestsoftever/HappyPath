@@ -74,20 +74,26 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 		return new AndConstraint<ResultAssertions<T>>(this);
 	}
 
-	public AndConstraint<ResultAssertions<T>> BeError(string because = "", params object[] becauseArgs)
+	public ErrorAssertionConstraint<T> BeError(string because = "", params object[] becauseArgs)
 	{
-		Subject.Match<bool>(
-			value =>
-			{
-				assertionChain
-					.BecauseOf(because, becauseArgs)
-					.FailWith("Expected {context:Result} to be an error{reason}, but was successful with value: {0}.", value);
+	Error? matchedError = null;
 
-				return false;
-			},
-			error => true);
+	Subject.Match<bool>(
+	value =>
+	{
+	assertionChain
+		.BecauseOf(because, becauseArgs)
+		.FailWith("Expected {context:Result} to be an error{reason}, but was successful with value: {0}.", value);
 
-		return new AndConstraint<ResultAssertions<T>>(this);
+	return false;
+	},
+	error =>
+	{
+	matchedError = error;
+	return true;
+	});
+
+	return new ErrorAssertionConstraint<T>(this, matchedError!, assertionChain);
 	}
 
 	public AndWhichConstraint<ResultAssertions<T>, Error> BeError(Error expected, string because = "", params object[] becauseArgs)
@@ -132,5 +138,30 @@ public class ResultAssertions<T>(Result<T> subject, AssertionChain assertionChai
 			});
 
 		return new AndConstraint<ResultAssertions<T>>(this);
+	}
+}
+
+public class ErrorAssertionConstraint<T>(ResultAssertions<T> parentAssertions, Error error, AssertionChain assertionChain)
+{
+	public AndConstraint<ResultAssertions<T>> And => new(parentAssertions);
+
+	public ErrorAssertionConstraint<T> WithMessage(string expected, string because = "", params object[] becauseArgs)
+	{
+		assertionChain
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(error.Message == expected)
+			.FailWith("Expected {context:Result} error to have message {0}{reason}, but found {1}.", expected, error.Message);
+
+		return this;
+	}
+
+	public ErrorAssertionConstraint<T> OfType<TError>(string because = "", params object[] becauseArgs) where TError : Error
+	{
+		assertionChain
+			.BecauseOf(because, becauseArgs)
+			.ForCondition(error.GetType() == typeof(TError))
+			.FailWith("Expected {context:Result} error to be of type {0}{reason}, but found {1}.", typeof(TError), error.GetType());
+
+		return this;
 	}
 }

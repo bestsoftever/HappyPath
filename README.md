@@ -1,4 +1,4 @@
-# HappyPath
+﻿# HappyPath
 
 Focus on the happy path - stop using exceptions and if statements to control the flow in your code!
 With this approach your code can be much shorter, making it easier to understand and maintain.
