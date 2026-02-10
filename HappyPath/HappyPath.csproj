@@ -10,11 +10,10 @@
 
 	<PropertyGroup>
 		<PackageId>HappyPath</PackageId>
-		<Version>1.0.0</Version>
 		<Authors>bestsoftever</Authors>
 		<Company>bestsoftever</Company>
 		<Description>Focus on the happy path - stop using exceptions and if statements to control the flow in your code!</Description>
-		<PackageTags>result;exceptions;flow;null</PackageTags>
+		<PackageTags>happypath;result;exceptions;flow;null</PackageTags>
 		<RepositoryUrl>https://github.com/bestsoftever/HappyPath</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
