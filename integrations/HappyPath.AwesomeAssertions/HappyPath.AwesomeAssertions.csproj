@@ -16,6 +16,7 @@
 		<PackageTags>result;happypath;awesomeassertions;fluentassertions;testing;assertions</PackageTags>
 		<RepositoryUrl>https://github.com/bestsoftever/HappyPath</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<RepositoryType>git</RepositoryType>
 		<PackageProjectUrl>https://github.com/bestsoftever/HappyPath</PackageProjectUrl>
@@ -31,6 +32,7 @@
 
 	<ItemGroup>
 		<None Include="..\..\icon.png" Pack="true" PackagePath="\" />
+		<None Include="README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 </Project>
